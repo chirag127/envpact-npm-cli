@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>envpact-cli — serverless secrets manager CLI</title>
+<meta name="description" content="Zero-dependency CLI for envpact: a centralized, serverless, Git-backed secrets manager for solo devs managing 100+ public repos.">
+<style>
+  :root{--bg:#0b0e14;--fg:#e6e6e6;--muted:#8b93a7;--accent:#5ee6a8;--card:#141925}
+  *{box-sizing:border-box}
+  body{margin:0;font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--fg)}
+  .wrap{max-width:760px;margin:0 auto;padding:12vh 24px 10vh}
+  h1{font-size:2.6rem;margin:0 0 .3em;letter-spacing:-.02em}
+  .accent{color:var(--accent)}
+  p.lead{font-size:1.2rem;color:var(--muted);margin:0 0 2em}
+  code{background:var(--card);padding:.15em .45em;border-radius:6px;font-size:.95em}
+  pre{background:var(--card);padding:16px 18px;border-radius:10px;overflow:auto;border:1px solid #202636}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .links{margin-top:2.5em;display:flex;gap:14px;flex-wrap:wrap}
+  .links a{border:1px solid #263049;padding:10px 16px;border-radius:8px;color:var(--fg)}
+  .links a:hover{border-color:var(--accent);text-decoration:none}
+  ul{color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1><span class="accent">env</span>pact-cli</h1>
+  <p class="lead">Zero-dependency CLI for a centralized, serverless, Git-backed secrets manager — one private vault, every project, zero infrastructure, $0 forever.</p>
+
+  <pre><code>npx envpact-cli --init auto   # create private vault
+cd my-project &amp;&amp; npx envpact-cli   # resolve refs, write .env</code></pre>
+
+  <ul>
+    <li>One private GitHub repo holds a single <code>secrets.json</code>.</li>
+    <li>Project secrets reference shared secrets via <code>shared.KEY_NAME</code>.</li>
+    <li>Rotate once → every project resolves the new value on next run.</li>
+    <li>Opt-in per-secret <code>age</code> encryption; <code>.env</code> written mode 0600.</li>
+  </ul>
+
+  <div class="links">
+    <a href="https://github.com/chirag127/envpact-npm-cli">GitHub</a>
+    <a href="https://www.npmjs.com/package/envpact-cli">npm</a>
+    <a href="https://github.com/chirag127/envpact-npm-cli#readme">Docs</a>
+  </div>
+</div>
+</body>
+</html>
