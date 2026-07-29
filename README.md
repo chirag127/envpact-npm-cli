@@ -1,14 +1,18 @@
 # envpact-cli
 
+[![Live](https://img.shields.io/badge/live-envpact--npm--cli.oriz.in-2ea44f)](https://envpact-npm-cli.oriz.in)
 [![npm version](https://img.shields.io/npm/v/envpact-cli.svg)](https://www.npmjs.com/package/envpact-cli)
+[![Stars](https://img.shields.io/github/stars/chirag127/envpact-npm-cli?style=social)](https://github.com/chirag127/envpact-npm-cli)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![CI](https://github.com/chirag127/envpact-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/chirag127/envpact-cli/actions/workflows/ci.yml)
+[![CI](https://github.com/chirag127/envpact-npm-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/chirag127/envpact-npm-cli/actions/workflows/ci.yml)
 
 Zero-dependency CLI for **envpact** — a centralized, serverless,
 Git-backed secrets manager for solo developers managing 100+ public
 GitHub repositories.
 
 > One private vault, every project, zero infrastructure, $0 forever.
+
+**Live:** https://envpact-npm-cli.oriz.in
 
 ## Why envpact?
 
