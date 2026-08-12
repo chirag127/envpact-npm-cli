@@ -12,7 +12,7 @@ jobs:
       contents: write   # for softprops/action-gh-release (creates the GH Release)
       id-token: write   # for npm provenance attestation
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: 22
