@@ -1,10 +1,14 @@
 # envpact-cli
 
-[![Live](https://img.shields.io/badge/live-envpact--npm--cli.oriz.in-2ea44f)](https://envpact-npm-cli.oriz.in)
-[![npm version](https://img.shields.io/npm/v/envpact-cli.svg)](https://www.npmjs.com/package/envpact-cli)
-[![Stars](https://img.shields.io/github/stars/chirag127/envpact-npm-cli?style=social)](https://github.com/chirag127/envpact-npm-cli)
+> One private vault, every project, zero infrastructure, $0 forever — a centralized, serverless, Git-backed secrets manager for solo devs juggling 100+ public repos.
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Stars](https://img.shields.io/github/stars/chirag127/envpact-npm-cli?style=social)](https://github.com/chirag127/envpact-npm-cli/stargazers)
+[![Last commit](https://img.shields.io/github/last-commit/chirag127/envpact-npm-cli)](https://github.com/chirag127/envpact-npm-cli/commits)
+[![Node](https://img.shields.io/badge/Node-%3E%3D18-339933?logo=node.js&logoColor=white)](https://nodejs.org)
+[![npm version](https://img.shields.io/npm/v/envpact-cli.svg)](https://www.npmjs.com/package/envpact-cli)
 [![CI](https://github.com/chirag127/envpact-npm-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/chirag127/envpact-npm-cli/actions/workflows/ci.yml)
+[![Live](https://img.shields.io/badge/live-envpact--npm--cli.oriz.in-2ea44f)](https://envpact-npm-cli.oriz.in)
 
 Zero-dependency CLI for **envpact** — a centralized, serverless,
 Git-backed secrets manager for solo developers managing 100+ public
@@ -12,7 +16,9 @@ GitHub repositories.
 
 > One private vault, every project, zero infrastructure, $0 forever.
 
-**Live:** https://envpact-npm-cli.oriz.in
+**Links:** [Repo](https://github.com/chirag127/envpact-npm-cli) · [Live docs](https://envpact-npm-cli.oriz.in) · [npm](https://www.npmjs.com/package/envpact-cli) · [envpact umbrella](https://chirag127.github.io/envpact/)
+
+⭐ **If this is useful, please [star the repo](https://github.com/chirag127/envpact-npm-cli/stargazers)** — it helps other developers find it.
 
 ## Why envpact?
 
@@ -25,6 +31,23 @@ envpact solves this with a **single private GitHub repo** holding a
 single `secrets.json` file. Project-specific secrets reference
 shared secrets via a `shared.KEY_NAME` syntax. Rotate once → every
 project resolves the new value on next run.
+
+## How the CLI resolves secrets
+
+```mermaid
+flowchart LR
+    vault[(chirag127/envpact-secrets<br/>private vault repo<br/>secrets.json)]
+    cli[[envpact-cli]]
+    ex[.env.example in project]
+    out[.env written<br/>mode 0600, gitignored]
+
+    vault -- git pull --> cli
+    ex -- required keys --> cli
+    cli -- resolve shared.* refs<br/>+ project values --> cli
+    cli -- write --> out
+    cli -- commit new keys back --> vault
+    cli -. --github .-> gha[GitHub Actions secrets]
+```
 
 ## Installation
 
@@ -232,6 +255,34 @@ The CLI auto-detects which auth method to use, in this order:
 3. **HTTPS PAT** — if `GITHUB_TOKEN` env var is set.
 4. **Plain HTTPS** — git's stored credentials.
 
+## Configuration
+
+envpact-cli is zero-config for the common path. These environment
+variables influence behaviour (names + purpose only):
+
+| Variable | Purpose |
+| :--- | :--- |
+| `GITHUB_TOKEN` | HTTPS PAT fallback for cloning/pushing the vault repo when gh CLI and SSH are unavailable. |
+| `ENVPACT_HOME` | Override the default `~/.envpact/` location for the cloned vault and global `.env`. |
+
+No secret values are ever stored in this repo. The vault itself is
+your own private GitHub repository.
+
+## Tech stack
+
+- **Node.js** (>=18), CommonJS, **zero runtime dependencies**.
+- Shells out to `git` and (optionally) `gh` and `age`.
+- Bin: `envpact` (package `envpact-cli`).
+
+## Repo structure
+
+```
+bin/envpact.js   # CLI entrypoint (the `envpact` bin)
+lib/*.js         # resolution, sync, git, encryption helpers
+tests/*.test.js  # node:test suite
+docs/            # full reference (served at envpact-npm-cli.oriz.in)
+```
+
 ## Encryption (opt-in)
 
 If you want defense-in-depth on top of the private repo:
@@ -265,9 +316,32 @@ Requires the [age](https://github.com/FiloSottile/age) binary.
 | envpact-vscode | "envpact" in VS Code Marketplace |
 | envpact-dashboard | https://envpact.oriz.in |
 
+## Related projects — the envpact ecosystem
+
+| Repo | Role |
+| :--- | :--- |
+| [envpact](https://github.com/chirag127/envpact) | Core (Python) vault library |
+| **envpact-npm-cli** | Zero-dependency Node CLI (this repo) |
+| [envpact-mcp-server](https://github.com/chirag127/envpact-mcp-server) | MCP server for AI agents |
+| [envpact-gh-action](https://github.com/chirag127/envpact-gh-action) | GitHub Action — resolve secrets in CI |
+| [envpact-registry-publisher-npm-cli](https://github.com/chirag127/envpact-registry-publisher-npm-cli) | Publish MCP servers to every registry |
+
+## Part of the oriz family
+
+One of ~80 [oriz](https://blog.oriz.in) projects — small, sharp,
+open-source tools. The live docs run **$0 on the Cloudflare free tier**.
+
+## Contributing
+
+PRs welcome. Conventional commits are the changelog.
+
+## Status
+
+**Stable.** Published to npm as `envpact-cli`.
+
 ## License
 
-MIT © Chirag Singhal — see [LICENSE](./LICENSE).
+MIT © 2026 Chirag Singhal · chirag@oriz.in — see [LICENSE](./LICENSE).
 
 ## Documentation
 
